@@ -130,6 +130,18 @@ android {
                 targets "opencv_jni_shared"
             }
         }
+        ndk {
+            abiFilters 'armeabi-v7a', 'arm64-v8a'
+        }
+    }
+
+    splits {
+        abi {
+            enable true
+            universalApk false
+            reset()
+            include 'armeabi-v7a', 'arm64-v8a' // , 'x86', 'x86_64',
+        }
     }
 
     buildTypes {
@@ -165,6 +177,11 @@ android {
         cmake {
             path (project.projectDir.toString() + '/libcxx_helper/CMakeLists.txt')
         }
+    }
+
+    packagingOptions {
+        exclude 'lib/x86/libopencv_java4.so'
+        exclude 'lib/x86_64/libopencv_java4.so'
     }
 }
 
